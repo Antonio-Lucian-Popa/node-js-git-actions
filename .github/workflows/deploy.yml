@@ -9,19 +9,26 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      # Clonare cod în /home/antonio/proiect
+      # Pasul standard pentru clonarea codului în locația implicită
       - uses: actions/checkout@v2
-        with:
-          path: /home/antonio/proiect  # Specificăm unde să fie clonat proiectul
 
+      # Mută proiectul din spațiul de lucru implicit în /home/antonio/proiect
+      - name: Move project to /home/antonio/proiect
+        run: |
+          rm -rf /home/antonio/proiect  # Șterge directorul vechi dacă există
+          mv $GITHUB_WORKSPACE /home/antonio/proiect
+
+      # Instalează dependențele
       - name: Install dependencies
         working-directory: /home/antonio/proiect
         run: npm install
 
+      # Rulează build-ul
       - name: Build
         working-directory: /home/antonio/proiect
         run: npm run build
 
+      # Deploy cu PM2
       - name: Deploy to Raspberry Pi
         working-directory: /home/antonio/proiect
         run: |
