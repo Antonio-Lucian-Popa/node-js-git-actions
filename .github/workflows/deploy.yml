@@ -9,15 +9,21 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      # Clonare cod în /home/antonio/proiect
       - uses: actions/checkout@v2
+        with:
+          path: /home/antonio/proiect  # Specificăm unde să fie clonat proiectul
 
       - name: Install dependencies
+        working-directory: /home/antonio/proiect
         run: npm install
 
       - name: Build
+        working-directory: /home/antonio/proiect
         run: npm run build
 
       - name: Deploy to Raspberry Pi
+        working-directory: /home/antonio/proiect
         run: |
           pm2 stop all || true
           pm2 start app.js
