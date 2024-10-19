@@ -10,6 +10,11 @@ app.get('/', (req, res) => {
   res.send('API-ul funcționează!');
 });
 
+// Endpoint pentru /nodeApp
+app.get('/nodeApp', (req, res) => {
+  res.send('API-ul funcționează pe ruta /nodeApp!');
+});
+
 // Endpoint simplu POST
 app.post('/data', (req, res) => {
   const data = req.body;
